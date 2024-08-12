@@ -1,59 +1,38 @@
 const express = require('express');
 const server = express();
-
-// const data = require('./friend.json');
-// const fs = require('fs');
-// const data = fs.readFileSync("./friend.json","utf-8");
-// console.log(data);
-
 const morgan = require('morgan');
+const products = require('./product.json');
 
-// Third-party middleware:-
-// 4.0 version -> body - parser
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+server.use(morgan('dev'));
 
-// Built-in middleware:-
-// express.json()->raw/json formate data
-// express.urlencode()->form data
-// express.static()->static data
-
-// server.use(express.json());
-// server.use(express.urlencoded({extended: true}));
-server.use("/hello",express.static("public"))
-server.use(morgan("dev"))
-
-let middleware =(req,res,next)=>{
-    console.log(req.body);
-    if(req.body.age >= 18){
-        console.log("Success");
-        next();
-    }
-    else{
-        return res.json({message:"Inccorect Way!!!"})
-    }
-}
-
-// let loggerFun = (req, res, next)=>{
-//     console.log(req.url,"\t",req.method,"\t" ) ;
-//     next();   
-// }
-// server.use(loggerFun)
-
-// application level:-
-// server.use(middleware);
-
-
-// Router-level middleware:
-server.get('/',middleware, (req, res) => {
-        res.write("Welcome Express Js");
-        res.end();
+server.get("/", (req, res) => {
+    res.send('welcome to express server');
 })
 
+// crud 
 
-// server.get("/friend",(req,res)=>{
-//     res.status(200);
-//     res.json(JSON.parse(data));
-// })
+// add new product - create 
+server.post("/product", (req, res) => {
+    // console.log(req.body);
+    products.push(req.body);
+    res.json({ product: req.body, Message: 'product added sucess' });
+});
 
-server.listen(3500,()=>{
-    console.log(`Server Start at http://localhost:3500`);   
+// get all products - read 
+server.get("/product",(req, res)=>{
+    res.json(products);
+});
+
+// get single products - read 
+server.get("/product/:id",(req, res)=>{
+    let id = +req.params.id;
+    let item = products.find((product)=>product.id === id);
+    res.json(item);
+});
+
+server.listen(1234, () => {
+    console.log("server start");
+
 })
