@@ -21,14 +21,14 @@ server.post("/product", (req, res) => {
 });
 
 // get all products - read 
-server.get("/product",(req, res)=>{
+server.get("/product", (req, res) => {
     res.json(products);
 });
 
 // get single products - read 
-server.get("/product/:id",(req, res)=>{
+server.get("/product/:id", (req, res) => {
     let id = +req.params.id;
-    let item = products.find((product)=>product.id === id);
+    let item = products.find((product) => product.id === id);
     res.json(item);
 });
 
