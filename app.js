@@ -18,10 +18,10 @@ app.get("/",(req, res)=>{
     res.send("welcome to express server");
 })
 
-const productRoutes = require("./routes/product.routes")
+const productRoutes = require("./routes/user.routes")
 const userRoutes = require("./routes/user.routes");
 
-app.use("/api/product",productRoutes);
+// app.use("/api/product",productRoutes);
 app.use("/api/user",userRoutes)
 
 

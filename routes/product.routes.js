@@ -1,7 +1,11 @@
 const express = require('express');
-const {addNewuser} = require ('../controller/product.controller');
-const userRoutes = express.Router();
+const productRoutes = express.Router();
+const {
+    addNewProduct
+} = require("../controller/product.controller");
 
-productRoutes.post("/",addNewuser);
 
-module.exports= productRoutes;
+//  add new product - create
+productRoutes.post("/",addNewProduct);
+
+module.exports = productRoutes;

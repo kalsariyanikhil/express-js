@@ -1,23 +1,27 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    firstName: string,
+    firstName: String,
     lastName: {
-        type: string,
+        type: String,
     },
     email: {
-        type: string
+        type: String
     },
     age: {
         type: Number
     },
     hobbies: [{
-        type: string
+        type: String
     }],
     address: {
-        line1: string,
-        line2: string,
-        pincode: number
+        line1: String,
+        line2: String,
+        pincode: Number
+    },
+    isDelete:{
+        type: Boolean,
+        default: false,
     }
 });
 
