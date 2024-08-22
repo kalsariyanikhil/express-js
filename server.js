@@ -1,21 +1,30 @@
 const express = require('express');
 const server = express();
 const morgan = require('morgan');
-const products = require('./product.json');
+const mongoose = require('mongoose');
 
 server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
-server.use(morgan('dev'));
+server.use(express.urlencoded({extended: true}));
+server.use(morgan("dev"));
 
-server.get("/", (req, res) => {
-    res.send('welcome to express server');
-})
+// Database connection
+mongoose
+    .connect("mongodb://127.0.0.1:27017/user")
+    .then(()=>console.log(`Database connected..👍`))
+    .catch(err=>console.log(err))
 
-const productRoutes =require("./routes/product.routes");
-const userRoutes = require("")
+server.get("/",(req,res)=>{
+    res.send("Welcome to the Express server");
+});
 
+// Product routes
+const productRoutes = require("./routes/product.routes");
+server.use("/api/product",productRoutes);
 
-server.listen(1234, () => {
-    console.log("server start");
+// User routes
+const userRoutes = require("./routes/user.routes");
+server.use("/api/users",userRoutes);
 
+server.listen(3500,()=>{
+    console.log("server start http://localhost:3500");
 })
